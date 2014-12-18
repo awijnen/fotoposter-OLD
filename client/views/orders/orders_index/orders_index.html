@@ -1,0 +1,20 @@
+<template name="OrdersIndex">
+    <h1>Mijn Orders</h1>
+    <ul>
+    	{{#each orders}}
+	        <li>
+	        	<div class="OrdersIndex-item">
+	        	 	<ul>
+	        	 		<li>Order ID: {{_id}}</li>
+	        	 		<li>User ID: {{userId}}</li>
+	        	 		<li>Opmerking: {{remark}}</li>
+	        	 		<li>Prijs: €{{price}}</li>
+	        	 		<li>Status: {{status}}</li>
+	        	 		<li>Verzonden op: {{submitted}}</li>
+	        	 	</ul>
+	        	</div>
+	        </li>
+	        <br>
+	    {{/each}}
+    </ul>
+</template>

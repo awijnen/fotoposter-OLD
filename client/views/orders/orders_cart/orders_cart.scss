@@ -1,0 +1,22 @@
+/*****************************************************************************/
+/* OrdersCart: Style */
+/*****************************************************************************/
+.orderscart li {
+	list-style-type: none;
+}
+
+.orderscart-orders {
+	padding: 10px;
+	margin: 10px;
+	border: 2px black solid;
+}
+
+.orderscart-orderitems {
+	border: 2px red solid;
+}
+
+.orderscart-orderitem {
+	padding: 10px;
+	margin: 10px;
+	border: 2px green solid;
+}

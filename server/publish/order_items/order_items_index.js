@@ -1,6 +1,7 @@
 /*****************************************************************************/
-/* Header: Style */
+/* OrderItemsIndex Publish Functions
 /*****************************************************************************/
-.header-button {
-	padding: 0 20px;
-}
+
+Meteor.publish('order_items_index', function () {
+  return OrderItems.find();
+});

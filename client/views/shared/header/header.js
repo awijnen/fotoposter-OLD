@@ -11,12 +11,16 @@ Template.Header.events({
 });
 
 Template.Header.helpers({
-  /*
-   * Example:
-   *  items: function () {
-   *    return Items.find();
-   *  }
-   */
+  setActiveClass: function(linkName) {
+      var cssClass = '';
+      var currentRoute = Router.current().route.getName();
+
+      if (linkName === currentRoute) {
+        cssClass = 'active';
+      }
+
+      return cssClass;
+  }
 });
 
 /*****************************************************************************/

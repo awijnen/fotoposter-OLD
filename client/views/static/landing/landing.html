@@ -1,6 +1,13 @@
 <template name="Landing">
     <div class="jumbotron">
         <h1>Welcome to FotoPoster</h1>
-        <p>Where artists print their work</p>
+        <p>Where artists have their work printed</p>
     </div>
+
+    <div>
+        <a href="{{pathFor 'order.items.new'}}">
+        	<button class="btn btn-primary btn-lg">Print</button>
+        </a>
+    </div>
+
 </template>

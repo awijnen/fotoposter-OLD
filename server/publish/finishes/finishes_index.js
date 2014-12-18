@@ -1,6 +1,7 @@
 /*****************************************************************************/
-/* Header: Style */
+/* FinishesIndex Publish Functions
 /*****************************************************************************/
-.header-button {
-	padding: 0 20px;
-}
+
+Meteor.publish('finishes_index', function() {
+    return Finishes.find();
+});

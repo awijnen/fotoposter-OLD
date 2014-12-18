@@ -1,6 +1,7 @@
 /*****************************************************************************/
-/* Header: Style */
+/* PapersIndex Publish Functions
 /*****************************************************************************/
-.header-button {
-	padding: 0 20px;
-}
+
+Meteor.publish('papers_index', function () {
+  return Papers.find();
+});

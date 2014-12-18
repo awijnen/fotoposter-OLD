@@ -1,6 +1,7 @@
 /*****************************************************************************/
-/* Header: Style */
+/* SuspensionsIndex Publish Functions
 /*****************************************************************************/
-.header-button {
-	padding: 0 20px;
-}
+
+Meteor.publish('suspensions_index', function () {
+  return Suspensions.find();
+});

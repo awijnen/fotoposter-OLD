@@ -1,0 +1,37 @@
+<template name="OrdersCart">
+  <h1>Mijn Winkelwagen</h1>
+    <ul class="orderscart">
+    	{{#each orders}}
+	        <li class="orderscart-orders">
+	        	<div>
+	        	 	<ul>
+	        	 		<li>Order ID: {{_id}}</li>
+	        	 		<li>User ID: {{userId}}</li>
+	        	 		<li>Opmerking: {{remark}}</li>
+	        	 		<li>Prijs: €{{price}}</li>
+	        	 		<li>Status: {{status}}</li>
+	        	 		<li>Verzonden op: {{submitted}}</li>
+	        	 	</ul>
+	        	 	<div class="orderscart-orderitems">
+    	 				{{#each orderItems}}
+    	 					<ul class="orderscart-orderitem">
+        	 					<li>OrderItem ID: {{_id}}</li>
+			        	 		<li>Order ID: {{orderId}}</li>
+			        	 		<li>Bestand: {{image}}</li>
+			        	 		<li>Aantal: {{quantity}}</li>
+			        	 		<li>Breedte: {{width}}</li>
+			        	 		<li>Lengte: {{height}}</li>
+			        	 		<li>Papier: {{getPaperName paperId}}</li>
+			        	 		<li>Afwerking: {{getFinishName finishId}}</li>
+			        	 		<li>Ophanging: {{getSuspensionName suspensionId}}</li>
+			        	 		<li>Remark: {{remark}}</li>
+			        	 		<li>User ID: {{userId}}</li>
+    	 					</ul>
+    	 				{{/each}}
+	        	 	</div>
+	        	</div>
+	        </li>
+	        <br>
+	    {{/each}}
+    </ul>
+</template>
