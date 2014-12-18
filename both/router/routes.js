@@ -22,13 +22,21 @@ Router.configure({
  */
 
 Router.route('/', {name: 'landing'});
+
+Router.route('/signin', {name: 'signin'});
+Router.route('/signup', {name: 'signup'});
+
 Router.route('/orders', {name: 'orders.index'});
 Router.route('/orders/new', {name: 'orders.new'});
 Router.route('/orders/cart', {name: 'orders.cart'});
 Router.route('/order_items/new', {name: 'order.items.new'});
+
 Router.route('/papers', {name: 'papers.index'});
+
 Router.route('/prices', {name: 'prices.index'});
+
 Router.route('/finishes', {name: 'finishes.index'});
+
 Router.route('/suspensions', {name: 'suspensions.index'});
 
 
