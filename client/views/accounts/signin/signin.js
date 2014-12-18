@@ -19,9 +19,8 @@ Template.Signin.events({
             else {
             	// The user has been logged in.
             	console.log('You have successfully logged in');
+            	Router.go('orders.new');
             }
-
         });
-        return false;
     }
 });

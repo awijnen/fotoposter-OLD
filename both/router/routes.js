@@ -26,6 +26,8 @@ Router.route('/', {name: 'landing'});
 Router.route('/signin', {name: 'signin'});
 Router.route('/signup', {name: 'signup'});
 
+Router.route('/memberzone', {name: 'memberzone'});
+
 Router.route('/orders', {name: 'orders.index'});
 Router.route('/orders/new', {name: 'orders.new'});
 Router.route('/orders/cart', {name: 'orders.cart'});
