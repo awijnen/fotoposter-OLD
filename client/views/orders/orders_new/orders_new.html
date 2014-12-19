@@ -1,10 +1,22 @@
 <template name="OrdersNew">
     <h1>Nieuwe Bestelling</h1>
 
-    <div class="ordersnew-orderitemscontainer">
-    	<div class="ordersnew-orderitem">
-    		{{> OrderItemsNew}}
-    	</div>
+    <div class="ordersnew-uploadarea">
+    	<button class="ordersnew-uploadbutton">Upload</button>
     </div>
 
+    <br>
+
+    <div>
+    	<h3>Aantal fotos: <span>{{numberOfImages}}</span></h3>
+    	<button class="ordersnew-configurebutton">Ga verder</button>
+    </div>
+
+   <!--  <h3>Aantal Fotos in deze Bestelling: <span>{{numberOfImages}}</span></h3>
+
+    <div class="ordersnew-orderitemscontainer">
+		<div class="ordersnew-orderitem">
+			{{> OrderItemsNew}}
+		</div>
+    </div> -->
 </template>

@@ -1,9 +1,15 @@
 <template name="OrderItemsNew">
     <form>
         <div class="controls">
+            <label for="ordersnew-imageurl">Bestand</label>
+            <input name="imageurl" type="text" value="{{imageUrl}}">
+            <br>
+
             <label for="ordersnew-remark">Opmerkingen</label>
             <textarea name="remark" id="ordersnew-remark" class="form-control" rows="5"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary ordersnew-placeorder">Place Order</button>
+
+        <br>
+        <button type="submit" class="btn btn-primary ordersnew-placeorder">Opslaan</button>
     </form>
 </template>

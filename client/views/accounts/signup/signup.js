@@ -43,7 +43,7 @@ Template.Signup.events({
                 } else {
                     // The user has been logged in.
                     console.log('You have successfully logged in');
-                    // Router.go('actions.home');
+                    Router.go('orders.new');
                 }
 
             });

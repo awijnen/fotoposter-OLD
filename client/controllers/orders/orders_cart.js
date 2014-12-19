@@ -11,6 +11,7 @@ OrdersCartController = RouteController.extend({
 OrdersCartController.helpers({
 	orders: function() {
 		return Orders.find({
+			userId: Meteor.userId(),
 			status: 'cart'
 		});
 	},

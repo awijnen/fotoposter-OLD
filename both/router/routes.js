@@ -31,7 +31,7 @@ Router.route('/memberzone', {name: 'memberzone'});
 Router.route('/orders', {name: 'orders.index'});
 Router.route('/orders/new', {name: 'orders.new'});
 Router.route('/orders/cart', {name: 'orders.cart'});
-Router.route('/order_items/new', {name: 'order.items.new'});
+Router.route('/:_order_id/order_items/:_order_item_id', {name: 'order.items.configure'});
 
 Router.route('/papers', {name: 'papers.index'});
 

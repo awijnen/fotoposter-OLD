@@ -13,7 +13,9 @@ Meteor.methods({
 
     orderItemInsert: function(orderItemAttributes) {
         check(orderItemAttributes, {
-            remark: String
+            remark: String,
+            orderId: String,
+            image: String
         });
 
         var user = Meteor.user();

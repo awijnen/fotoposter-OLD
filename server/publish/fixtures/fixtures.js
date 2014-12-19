@@ -40,127 +40,127 @@ if (Suspensions.find().count() === 0) {
 	suspensions.forEach(insertSuspension);
 }
 
-if (Orders.find().count() === 0) {
-	// Get current time
-	var now = new Date().getTime();
+// if (Orders.find().count() === 0) {
+// 	// Get current time
+// 	var now = new Date().getTime();
 
-	// Create three users
-	var anthonyId = Meteor.users.insert({
-		profile: {name: 'Anthony Wijnen'}
-	});
-	var anthony = Meteor.users.findOne(anthonyId);
+// 	// Create three users
+// 	var anthonyId = Meteor.users.insert({
+// 		profile: {name: 'Anthony Wijnen'}
+// 	});
+// 	var anthony = Meteor.users.findOne(anthonyId);
 
-	var kristofId = Meteor.users.insert({
-		profile: {name: 'Kristof Wijnen'}
-	});
-	var kristof = Meteor.users.findOne(kristofId);
+// 	var kristofId = Meteor.users.insert({
+// 		profile: {name: 'Kristof Wijnen'}
+// 	});
+// 	var kristof = Meteor.users.findOne(kristofId);
 
-	var erikId = Meteor.users.insert({
-		profile: {name: 'Erik Wijnen'}
-	});
-	var erik = Meteor.users.findOne(erikId);
-
-
-	// Create a couple stub orders
-	var order1 = Orders.insert({
-		userId: anthony._id,
-		remark: "Dit is een order dat nog in de 'cart' zit omdat het status 'cart' heeft.",
-		status: 'cart',
-		submitted: new Date(now - 10 * 3600 * 1000),
-		price: 100,
-		isPaid: false,
-		processingStarted: false
-	}, function(err, res) {
-
-		var SG201 = Papers.findOne({name: 'SG201'});
-		var GL201 = Papers.findOne({name: 'GL201'});
-		var MA101 = Papers.findOne({name: 'MA101'});
-
-		var Dibond = Finishes.findOne({name: 'Dibond'});
-		var DiLite = Finishes.findOne({name: 'DiLite'});
-		var MDF = Finishes.findOne({name: 'MDF'});
-
-		var geen_ophanging = Suspensions.findOne({name: 'Geen Ophanging'});
-		var alu_frame = Suspensions.findOne({name: 'Aluminium Frame'});
-		var groeven = Suspensions.findOne({name: 'Groeven'});
-
-		var order_item1 = OrderItems.insert({
-			userId: anthony._id,
-			orderId: res,
-			paperId: SG201._id,
-			finishId: Dibond._id,
-			suspensionId: groeven._id,
-			laminate: true,
-			width: 40,
-			height: 60,
-			quantity: 1,
-			image: '/my_image.png',
-			image_fpp: '/my_image_fpp.png',
-			remark: "Dit is een order item dat bij een bepaalde order hoort.",
-			submitted: new Date(now - 10 * 3600 * 1000)
-		});
-
-		var order_item2 = OrderItems.insert({
-			userId: anthony._id,
-			orderId: res,
-			paperId: GL201._id,
-			finishId: DiLite._id,
-			suspensionId: geen_ophanging._id,
-			laminate: false,
-			width: 40,
-			height: 60,
-			quantity: 1,
-			image: '/my_image.png',
-			image_fpp: '/my_image_fpp.png',
-			remark: "Dit is een order item dat bij een bepaalde order hoort.",
-			submitted: new Date(now - 10 * 3600 * 1000 + 1)
-		});
+// 	var erikId = Meteor.users.insert({
+// 		profile: {name: 'Erik Wijnen'}
+// 	});
+// 	var erik = Meteor.users.findOne(erikId);
 
 
-		var order_item3 = OrderItems.insert({
-			userId: anthony._id,
-			orderId: res,
-			paperId: MA101._id,
-			finishId: MDF._id,
-			suspensionId: alu_frame._id,
-			laminate: true,
-			width: 40,
-			height: 60,
-			quantity: 1,
-			image: '/my_image.png',
-			image_fpp: '/my_image_fpp.png',
-			remark: "Dit is een order item dat bij een bepaalde order hoort.",
-			submitted: new Date(now - 10 * 3600 * 1000 + 1)
-		});
-	});
+// 	// Create a couple stub orders
+// 	var order1 = Orders.insert({
+// 		userId: anthony._id,
+// 		remark: "Dit is een order dat nog in de 'cart' zit omdat het status 'cart' heeft.",
+// 		status: 'cart',
+// 		submitted: new Date(now - 10 * 3600 * 1000),
+// 		price: 100,
+// 		isPaid: false,
+// 		processingStarted: false
+// 	}, function(err, res) {
 
-	Orders.insert({
-		userId: anthony._id,
-		remark: "Kan je er aub voor zorgen dat de kleuren er goed uitkomen?",
-		status: 'submitted',
-		submitted: new Date(now - 7 * 3600 *1000),
-		price: 100,
-		isPaid: false,
-		processingStarted: false
-	});
+// 		var SG201 = Papers.findOne({name: 'SG201'});
+// 		var GL201 = Papers.findOne({name: 'GL201'});
+// 		var MA101 = Papers.findOne({name: 'MA101'});
 
-	Orders.insert({
-		userId: kristof._id,
-		remark: "U mag gerust mijn foto versnijden zodanig dat het formaat juist uitkomt.",
-		status: 'submitted',
-		submitted: new Date(now - 5 * 3600 *1000),
-		price: 100,
-		isPaid: false,
-		processingStarted: false
-	});
+// 		var Dibond = Finishes.findOne({name: 'Dibond'});
+// 		var DiLite = Finishes.findOne({name: 'DiLite'});
+// 		var MDF = Finishes.findOne({name: 'MDF'});
 
-	Orders.insert({
-		userId: erik._id,
-		remark: "U mag alle prints vanachter in het tuinhok achterlaten. Ik kom ze daar wel halen.",
-		status: 'submitted',
-		submitted: new Date(now - 3 * 3600 *1000),
-		price: 100,
-		isPaid: false,
-		processingStarted: false
-	});
-}
+// 		var geen_ophanging = Suspensions.findOne({name: 'Geen Ophanging'});
+// 		var alu_frame = Suspensions.findOne({name: 'Aluminium Frame'});
+// 		var groeven = Suspensions.findOne({name: 'Groeven'});
+
+// 		var order_item1 = OrderItems.insert({
+// 			userId: anthony._id,
+// 			orderId: res,
+// 			paperId: SG201._id,
+// 			finishId: Dibond._id,
+// 			suspensionId: groeven._id,
+// 			laminate: true,
+// 			width: 40,
+// 			height: 60,
+// 			quantity: 1,
+// 			image: '/my_image.png',
+// 			image_fpp: '/my_image_fpp.png',
+// 			remark: "Dit is een order item dat bij een bepaalde order hoort.",
+// 			submitted: new Date(now - 10 * 3600 * 1000)
+// 		});
+
+// 		var order_item2 = OrderItems.insert({
+// 			userId: anthony._id,
+// 			orderId: res,
+// 			paperId: GL201._id,
+// 			finishId: DiLite._id,
+// 			suspensionId: geen_ophanging._id,
+// 			laminate: false,
+// 			width: 40,
+// 			height: 60,
+// 			quantity: 1,
+// 			image: '/my_image.png',
+// 			image_fpp: '/my_image_fpp.png',
+// 			remark: "Dit is een order item dat bij een bepaalde order hoort.",
+// 			submitted: new Date(now - 10 * 3600 * 1000 + 1)
+// 		});
+
+
+// 		var order_item3 = OrderItems.insert({
+// 			userId: anthony._id,
+// 			orderId: res,
+// 			paperId: MA101._id,
+// 			finishId: MDF._id,
+// 			suspensionId: alu_frame._id,
+// 			laminate: true,
+// 			width: 40,
+// 			height: 60,
+// 			quantity: 1,
+// 			image: '/my_image.png',
+// 			image_fpp: '/my_image_fpp.png',
+// 			remark: "Dit is een order item dat bij een bepaalde order hoort.",
+// 			submitted: new Date(now - 10 * 3600 * 1000 + 1)
+// 		});
+// 	});
+
+// 	Orders.insert({
+// 		userId: anthony._id,
+// 		remark: "Kan je er aub voor zorgen dat de kleuren er goed uitkomen?",
+// 		status: 'submitted',
+// 		submitted: new Date(now - 7 * 3600 *1000),
+// 		price: 100,
+// 		isPaid: false,
+// 		processingStarted: false
+// 	});
+
+// 	Orders.insert({
+// 		userId: kristof._id,
+// 		remark: "U mag gerust mijn foto versnijden zodanig dat het formaat juist uitkomt.",
+// 		status: 'submitted',
+// 		submitted: new Date(now - 5 * 3600 *1000),
+// 		price: 100,
+// 		isPaid: false,
+// 		processingStarted: false
+// 	});
+
+// 	Orders.insert({
+// 		userId: erik._id,
+// 		remark: "U mag alle prints vanachter in het tuinhok achterlaten. Ik kom ze daar wel halen.",
+// 		status: 'submitted',
+// 		submitted: new Date(now - 3 * 3600 *1000),
+// 		price: 100,
+// 		isPaid: false,
+// 		processingStarted: false
+// 	});
+// }

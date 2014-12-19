@@ -13,7 +13,9 @@ Meteor.methods({
 
     orderInsert: function(orderAttributes) {
         check(orderAttributes, {
-            remark: String
+            remark: String,
+            status: String,
+            price: Number
         });
 
         var user = Meteor.user();
