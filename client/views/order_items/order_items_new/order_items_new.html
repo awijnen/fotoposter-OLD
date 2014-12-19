@@ -1,12 +1,15 @@
 <template name="OrderItemsNew">
     <form>
         <div class="controls">
-            <label for="ordersnew-imageurl">Bestand</label>
-            <input name="imageurl" type="text" value="{{imageUrl}}">
-            <br>
+            <label>
+                Bestand:
+                <input name="imageurl" type="text" value="{{imageUrl}}">
+            </label>
 
-            <label for="ordersnew-remark">Opmerkingen</label>
-            <textarea name="remark" id="ordersnew-remark" class="form-control" rows="5"></textarea>
+            <label>
+                Opmerkingen:
+                <textarea name="remark" id="ordersnew-remark" class="form-control" rows="5"></textarea>
+            </label>
         </div>
 
         <br>

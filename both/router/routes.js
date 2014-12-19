@@ -7,8 +7,8 @@ Router.configure({
     notFoundTemplate: 'NotFound',
     waitOn: function() {
 		return [
-					Meteor.subscribe('orders_index'),
-					Meteor.subscribe('order_items_index'),
+					Meteor.subscribe('orders_index', {userId: Meteor.userId()}),
+					Meteor.subscribe('order_items_index', {userId: Meteor.userId()}),
 					Meteor.subscribe('papers_index'),
 					Meteor.subscribe('finishes_index'),
 					Meteor.subscribe('suspensions_index'),
@@ -34,11 +34,8 @@ Router.route('/orders/cart', {name: 'orders.cart'});
 Router.route('/:_order_id/order_items/:_order_item_id', {name: 'order.items.configure'});
 
 Router.route('/papers', {name: 'papers.index'});
-
 Router.route('/prices', {name: 'prices.index'});
-
 Router.route('/finishes', {name: 'finishes.index'});
-
 Router.route('/suspensions', {name: 'suspensions.index'});
 
 

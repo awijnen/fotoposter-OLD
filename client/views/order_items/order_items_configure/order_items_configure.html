@@ -1,0 +1,39 @@
+<template name="OrderItemsConfigure">
+    <div class="orderitemsconfigure-ordercontainer">
+        <h1>Order: <span>{{getOrderId orderId}}</span></h1>
+    </div>
+
+    <div class="orderitemsconfigure-itemcontainer">
+    	<h1>Order Item: <span>{{_id}}</span></h1>
+
+    	<div class="orderitemsconfigure-update">
+    		<form>
+    			<label>
+    				Breedte:
+    				<input type="number" name="width" /> cm
+    			</label>
+
+    			<label>
+    				Lengte:
+    				<input type="number" name="length" /> cm
+    			</label>
+
+    			<label>
+    				Papier:
+    				<input type="text" name="paper" />
+    			</label>
+
+    			<label>
+    				Afwerking:
+    				<input type="text" name="finish" />
+    			</label>
+
+    			<label>
+    				Ophanging:
+    				<input type="text" name="suspension" />
+    			</label>
+
+    		</form>
+    	</div>
+    </div>
+</template>
