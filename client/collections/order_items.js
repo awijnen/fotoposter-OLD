@@ -1,4 +1,8 @@
 OrderItems.allow({
+    insert: function(userId) {
+        return true;
+    },
+
     update: function(userId, doc, fieldNames, modifier) {
         return userId;
     },
@@ -9,6 +13,10 @@ OrderItems.allow({
 });
 
 OrderItems.deny({
+    insert: function(userId) {
+        return false;
+    },
+
     update: function(userId, doc, fieldNames, modifier) {
         return false;
     },

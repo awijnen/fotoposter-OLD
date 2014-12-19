@@ -4,11 +4,12 @@
 # but you can also edit it by hand.
 
 meteor-platform
-insecure
 accounts-password
 iron:router
 mizzao:bootstrap-3
 fourseven:scss
 accounts-base
 gfk:notifications
+aldeed:collection2
+aldeed:autoform
 
