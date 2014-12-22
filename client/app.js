@@ -18,7 +18,23 @@ App.helpers = {
 	    return _.map(all, function(val, index) {
 	        return {index: index+1, value: val};
 	    });
-	}
+	},
+
+    selected: function(val1, val2) {
+        return val1 === val2 ? ' selected' : '';
+    },
+
+    papers: function() {
+        return Papers.find();
+    },
+
+    finishes: function() {
+        return Finishes.find();
+    },
+
+    suspensions: function() {
+        return Suspensions.find();
+    }
 };
 
 _.each(App.helpers, function (helper, key) {

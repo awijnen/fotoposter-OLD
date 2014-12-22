@@ -1,39 +1,73 @@
 <template name="OrderItemsConfigure">
-    <div class="orderitemsconfigure-ordercontainer">
-        <h1>Order: <span>{{getOrderId orderId}}</span></h1>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="orderitemsconfigure-update">
+                <form role="form">
+                    <div class="form-group">
+                        <label>
+                            Aantal:
+                            <input class="form-control" type="number" name="quantity" />
+                        </label>
+
+                        <label>
+                            Breedte (cm):
+                            <input class="form-control" type="number" name="width" />
+                        </label>
+
+                        <label>
+                            Lengte (cm):
+                            <input class="form-control" type="number" name="length" />
+                        </label>
+
+                        <label>
+                            Papier:
+                            <select class="form-control" name="paper">
+                                {{#each papers}}
+                                <option value="{{_id}}">{{name}}</option>
+                                {{/each}}
+                            </select>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Afwerking:
+                            <select class="form-control" name="finish">
+                                {{#each finishes}}
+                                <option value="{{_id}}">{{name}}</option>
+                                {{/each}}
+                            </select>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Ophanging:
+                            <select class="form-control" name="suspension">
+                                {{#each suspensions}}
+                                <option value="{{_id}}">{{name}}</option>
+                                {{/each}}
+                            </select>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary orderitemsconfigure-save">Opslaan</button>
+
+                </form>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="orderitemsconfigure-itemcontainer">
+                        <p>Order: <span>{{getOrderId orderId}}</span></p>
+                        <p>Order Item: <span>{{_id}}</span>
+                        </p>
+                        <img src="{{image}}">
+                        <button type="submit" class="btn btn-primary orderitemsconfigure-delete">Verwijder Order Item</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="orderitemsconfigure-itemcontainer">
-    	<h1>Order Item: <span>{{_id}}</span></h1>
-
-    	<div class="orderitemsconfigure-update">
-    		<form>
-    			<label>
-    				Breedte:
-    				<input type="number" name="width" /> cm
-    			</label>
-
-    			<label>
-    				Lengte:
-    				<input type="number" name="length" /> cm
-    			</label>
-
-    			<label>
-    				Papier:
-    				<input type="text" name="paper" />
-    			</label>
-
-    			<label>
-    				Afwerking:
-    				<input type="text" name="finish" />
-    			</label>
-
-    			<label>
-    				Ophanging:
-    				<input type="text" name="suspension" />
-    			</label>
-
-    		</form>
-    	</div>
-    </div>
 </template>

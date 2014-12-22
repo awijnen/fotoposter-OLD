@@ -4,6 +4,7 @@
  *    return OrderItems.find({is_public: true});
  *  }
  */
+
 OrderItems.allow({
   insert: function (userId, doc) {
     return true;

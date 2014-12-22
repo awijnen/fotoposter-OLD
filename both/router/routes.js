@@ -49,7 +49,7 @@ var requireLogin = function() {
 			this.render(this.loadingTemplate);
 		} else {
 			console.log('You need to login first.');
-			this.render('Landing');
+			Router.go('landing');
 		}
 	} else {
 		this.next();

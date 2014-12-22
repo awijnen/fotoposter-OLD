@@ -12,6 +12,7 @@ Meteor.methods({
      */
 
     orderInsert: function(orderAttributes) {
+        debugger;
         check(orderAttributes, {
             remark: String,
             status: String,

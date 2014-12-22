@@ -6,10 +6,7 @@
 meteor-platform
 accounts-password
 iron:router
-mizzao:bootstrap-3
 fourseven:scss
 accounts-base
 gfk:notifications
-aldeed:collection2
-aldeed:autoform
-
+fezvrasta:bootstrap-material-design-noglyph
