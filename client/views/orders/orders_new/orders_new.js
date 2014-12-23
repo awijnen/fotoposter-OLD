@@ -2,87 +2,144 @@
 /* New: Event Handlers and Helpersss .js*/
 /*****************************************************************************/
 Template.OrdersNew.events({
-	'submit form': function (e, templ) {
-		e.preventDefault();
+    'click .ordersnew-uploadsubmit': function(e, templ) {
+        Session.set('uploading', true);
+        var fileObjects = document.getElementById('ordersnew-uploadcontrol').files;
+        var files = _.map(fileObjects, function(file) {
+            return file;
+        });
+        var sessionArrayKey = 'imageUrlArray';
 
-		var order = {
-			remark: templ.find('textarea[name=remark]').value
-		};
+        var uploadDone = function(err, cloudStorageUrl) {
+            if (err) {
+                console.dir(err);
+            } else {
+                console.log('Pushing cloudStorageUrl in Session variable "imageUrlArray" ...' + cloudStorageUrl);
+                App.sessionArrayPush(sessionArrayKey, cloudStorageUrl);
+            }
+        };
 
-		Meteor.call('orderInsert', order, function(error, orderId) {
-			if (error) {
-				throw new Error('orderInsert method malfunction');
-			} else {
-				Router.go('landing');
-			}
-		});
-	},
+        var lastUploadDone = function(err, cloudStorageUrl) {
+            if (err) {
+                console.dir(err);
+            } else {
+                console.log('Pushing cloudStorageUrl in Session variable "imageUrlArray" ...' + cloudStorageUrl + '\nLast upload done starting insert ...');
+                App.sessionArrayPush(sessionArrayKey, cloudStorageUrl);
+                Session.set('uploading', false);
+                runInsert();
+            }
+        };
 
-	'click .ordersnew-uploadbutton': function() {
-		var orderAttributes = {
-			remark: "Dit is een order dat nog in je winkelwagen zit omdat het status 'cart' heeft.",
-			status: 'cart',
-			price: 100,
-		};
+        files.forEach(function(file, index, array) {
+            var uploader = new Slingshot.Upload("myFileUploads");
+            if (index == array.length-1) {uploader.send(file, lastUploadDone);}
+            else {uploader.send(file, uploadDone);}
+        });
 
-		Meteor.call('orderInsert', orderAttributes, function(error, orderId) {
-			if (error) {
-				throw new Error('orderInsert method malfunction');
-			} else {
-				Session.set('orderIdToBeConfigured', orderId);
+        var runInsert = function() {
+        	var orderAttributes = {
+	            remark: "Dit is een order dat nog in je winkelwagen zit omdat het status 'cart' heeft.",
+	            status: 'cart',
+	            price: 100,
+	        };
 
-				var imageUrlArray = Session.get('imageUrlArray');
-				imageUrlArray.forEach(function(element, index, array) {
-					var orderItemAttributes = {
-						remark: "Deze foto mag je lekker afdrukken Yo!",
-						orderId: orderId,
-						image: element,
-					};
+	        Meteor.call('orderInsert', orderAttributes, function(error, orderId) {
+	            if (error) {
+	                throw new Error('orderInsert method malfunction');
+	            } else {
+	                console.log("Created order with Order ID: ('" + orderId + "')");
+	                Session.set('currentOrderId', orderId);
 
-					Meteor.call('orderItemInsert', orderItemAttributes, function(error, orderItemId) {
-						if (error) {
-							throw new Error('orderItemInsert method malfunction');
-						} else {
-							console.log("Created OrderItem ('" + orderItemId + "'') as part of Order ('" + orderId + "')");
-						}
-					});
-				});
-			}
-		});
-	},
+	                var imageUrlArray = Session.get('imageUrlArray');
+			        imageUrlArray.forEach(function(url, index, array){
+			        	var orderItemAttributes = {
+				            orderId: orderId,
+				            image: url,
+				        };
 
-	'click .ordersnew-configurebutton': function() {
-		var orderId = Session.get('orderIdToBeConfigured');
-		var orderItemId = OrderItems.findOne({orderId: orderId})._id;
-		Router.go('order.items.configure', {_order_id: orderId, _order_item_id: orderItemId});
-	}
+			            Meteor.call('orderItemInsert', orderItemAttributes, function(error, orderItemId) {
+			                if (error) {
+			                    throw new Error('orderItemInsert method malfunction');
+			                } else {
+			                    console.log("Created OrderItem ('" + orderItemId + "'') as part of Order ('" + orderId + "')");
+			                }
+			            });
+			        });
+	            }
+	        });
+        };
+    },
+
+    // 'click .ordersnew-uploadbutton': function() {
+    //     var orderAttributes = {
+    //         remark: "Dit is een order dat nog in je winkelwagen zit omdat het status 'cart' heeft.",
+    //         status: 'cart',
+    //         price: 100,
+    //     };
+
+    //     Meteor.call('orderInsert', orderAttributes, function(error, orderId) {
+    //         if (error) {
+    //             throw new Error('orderInsert method malfunction');
+    //         } else {
+    //             Session.set('currentOrderId', orderId);
+
+    //             var imageUrlArray = Session.get('imageUrlArray');
+    //             imageUrlArray.forEach(function(element, index, array) {
+    //                 var orderItemAttributes = {
+    //                     remark: "Deze foto mag je lekker afdrukken Yo!",
+    //                     orderId: orderId,
+    //                     image: element,
+    //                 };
+
+    //                 Meteor.call('orderItemInsert', orderItemAttributes, function(error, orderItemId) {
+    //                     if (error) {
+    //                         throw new Error('orderItemInsert method malfunction');
+    //                     } else {
+    //                         console.log("Created OrderItem ('" + orderItemId + "'') as part of Order ('" + orderId + "')");
+    //                     }
+    //                 });
+    //             });
+    //         }
+    //     });
+    // },
+
+    'click .ordersnew-configurebutton': function() {
+        var orderId = Session.get('currentOrderId');
+        var orderItemId = OrderItems.findOne({
+            orderId: orderId
+        })._id;
+        Router.go('order.items.configure', {
+            _order_id: orderId,
+            _order_item_id: orderItemId
+        });
+    }
 });
 
 Template.OrdersNew.helpers({
-	imageUrlArray: function() {
-		var imageUrlArray = Session.get('imageUrlArray');
-		return imageUrlArray;
-	},
+    numberOfImages: function() {
+        return Session.get('imageUrlArray').length;
+    },
 
-	numberOfImages: function() {
-		return Session.get('imageUrlArray').length;
-	}
+    uploadingFiles: function() {
+    	return Session.get('uploading');
+    },
+
+    filesUploaded: function() {
+    	var sessionArrayHasImages = ! _.isEmpty(Session.get('imageUrlArray'));
+    	var loadingHasFinished = ! Session.get('uploading');
+    	return sessionArrayHasImages && loadingHasFinished;
+    }
 });
 
 /*****************************************************************************/
 /* New: Lifecycle Hooks */
 /*****************************************************************************/
-Template.OrdersNew.created = function () {
-	Session.set('imageUrlArray', [
-		'https://s3.eu-central-1.amazonaws.com/fotoposter/Customs.jpg',
-		'https://s3.eu-central-1.amazonaws.com/fotoposter/bicycle_road.jpeg',
-		'https://s3.eu-central-1.amazonaws.com/fotoposter/bulb.jpg'
-		]
-	);
+Template.OrdersNew.created = function() {
+    Session.set('imageUrlArray', [
+    ]);
+    Session.set('loading', false);
 };
 
-Template.OrdersNew.rendered = function () {
-};
+Template.OrdersNew.rendered = function() {};
 
-Template.OrdersNew.destroyed = function () {
-};
+Template.OrdersNew.destroyed = function() {};

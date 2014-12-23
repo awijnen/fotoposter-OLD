@@ -2,6 +2,17 @@
 /* Client App Namespace  */
 /*****************************************************************************/
 _.extend(App, {
+    sessionArrayPush: function(sessionArrayKey, newItem) {
+        var sessionArray = Session.get(sessionArrayKey);
+        sessionArray.push(newItem);
+        Session.set(sessionArrayKey, sessionArray);
+    },
+
+    sessionArrayPop: function(sessionArrayKey) {
+        var sessionArray = Session.get(sessionArrayKey);
+        sessionArray.pop();
+        Session.set(sessionArrayKey, sessionArray);
+    },
 });
 
 App.helpers = {

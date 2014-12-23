@@ -12,13 +12,6 @@ Meteor.methods({
      */
 
     orderInsert: function(orderAttributes) {
-        debugger;
-        check(orderAttributes, {
-            remark: String,
-            status: String,
-            price: Number
-        });
-
         var user = Meteor.user();
         var order = _.extend(orderAttributes, {
             userId: user._id,

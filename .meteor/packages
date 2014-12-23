@@ -9,4 +9,6 @@ iron:router
 fourseven:scss
 accounts-base
 gfk:notifications
-fezvrasta:bootstrap-material-design-noglyph
+nemo64:bootstrap
+less
+edgee:slingshot

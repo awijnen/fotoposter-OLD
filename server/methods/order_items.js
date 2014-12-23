@@ -12,12 +12,6 @@ Meteor.methods({
      */
 
     orderItemInsert: function(orderItemAttributes) {
-        check(orderItemAttributes, {
-            remark: String,
-            orderId: String,
-            image: String
-        });
-
         var user = Meteor.user();
         var orderItem = _.extend(orderItemAttributes, {
             userId: user._id,
