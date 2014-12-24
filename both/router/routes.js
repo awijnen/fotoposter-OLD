@@ -56,4 +56,4 @@ var requireLogin = function() {
 	}
 };
 
-Router.onBeforeAction(requireLogin, {only: ['orders.index', 'orders.upload', 'order.configure', 'orders.cart', 'orders.items.new']});
+Router.onBeforeAction(requireLogin, {only: ['orders.index', 'orders.upload', 'orders.configure', 'orders.cart', 'orders.items.new']});

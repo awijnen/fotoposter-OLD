@@ -1,73 +1,93 @@
 <template name="OrdersConfigure">
+    <div class="ordersconfigure">
 
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="ordersconfigure-update">
-                <form role="form">
-                    <div class="form-group">
-                        <label>
-                            Aantal:
-                            <input class="form-control" type="number" name="quantity" />
-                        </label>
+        <div class="row">
 
-                        <label>
-                            Breedte (cm):
-                            <input class="form-control" type="number" name="width" />
-                        </label>
-
-                        <label>
-                            Lengte (cm):
-                            <input class="form-control" type="number" name="length" />
-                        </label>
-
-                        <label>
-                            Papier:
-                            <select class="form-control" name="paper">
-                                {{#each papers}}
-                                <option value="{{_id}}">{{name}}</option>
-                                {{/each}}
-                            </select>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label>
-                            Afwerking:
-                            <select class="form-control" name="finish">
-                                {{#each finishes}}
-                                <option value="{{_id}}">{{name}}</option>
-                                {{/each}}
-                            </select>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label>
-                            Ophanging:
-                            <select class="form-control" name="suspension">
-                                {{#each suspensions}}
-                                <option value="{{_id}}">{{name}}</option>
-                                {{/each}}
-                            </select>
-                        </label>
-                    </div>
-                    <button type="submit" class="btn btn-primary ordersconfigure-save">Opslaan</button>
-
-                </form>
-            </div>
-        </div>
-
-        <!-- <div class="col-sm-6">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="ordersconfigure-itemcontainer">
-                        <p>Order: <span>{{getOrderId orderId}}</span></p>
-                        <p>Order Item: <span>{{_id}}</span>
-                        </p>
-                        <img src="{{image}}">
-                        <button type="submit" class="btn btn-primary ordersconfigure-delete">Verwijder Order Item</button>
+            <div class="col-sm-5 col-sm-offset-1">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="ordersconfigure-itemcontainer">
+                            {{> Thumbnail}}
+                            <p>Order Item: <span>{{_id}}</span></p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div> -->
+
+            <div class="col-sm-4 col-sm-offset-1">
+                <div class="ordersconfigure-update">
+                    <form role="form">
+                        <div class="form-group">
+                            <label>
+                                Aantal:
+                                <input class="form-control" type="number" name="quantity" />
+                            </label>
+
+                            <label>
+                                Breedte (cm):
+                                <input class="form-control" type="number" name="width" />
+                            </label>
+
+                            <label>
+                                Lengte (cm):
+                                <input class="form-control" type="number" name="length" />
+                            </label>
+
+                            <label>
+                                Papier:
+                                <select class="form-control" name="paper">
+                                    {{#each papers}}
+                                    <option value="{{_id}}">{{name}}</option>
+                                    {{/each}}
+                                </select>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Afwerking:
+                                <select class="form-control" name="finish">
+                                    {{#each finishes}}
+                                    <option value="{{_id}}">{{name}}</option>
+                                    {{/each}}
+                                </select>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                Ophanging:
+                                <select class="form-control" name="suspension">
+                                    {{#each suspensions}}
+                                    <option value="{{_id}}">{{name}}</option>
+                                    {{/each}}
+                                </select>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary ordersconfigure-save">Opslaan</button>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="row">
+            {{> OrdersConfigureThumbnails route='orders.configure'}}
+        </div>
+
+        <hr>
+
+        <div class="row">
+            {{> OrdersConfiguredThumbnails route='orders.configured'}}
+        </div>
+
+        <hr>
+
+        <div class="row">
+             <p>Order: <span>{{getOrderId orderId}}</span></p>
+             <button type="submit" class="btn btn-primary ordersconfigure-delete">Verwijder Order Item</button>
+        </div>
     </div>
 
 </template>
