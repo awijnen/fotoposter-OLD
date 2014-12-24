@@ -1,0 +1,15 @@
+<template name="OrdersOpen">
+  <h3>Open Orders</h3>
+  <div class="ordersopen">
+  	<form role="form">
+  		<div class="form-group">
+   		 	<select id="test" class="form-control">
+	  			<option value="default" disabled="disabled" selected>Select one--</option>
+	  			{{#each openOrders}}
+	  				<option value="{{_id}}">{{_id}}</option>
+	  			{{/each}}
+	  		</select>
+		</div>
+  	</form>
+  </div>
+</template>

@@ -29,9 +29,9 @@ Router.route('/signup', {name: 'signup'});
 Router.route('/memberzone', {name: 'memberzone'});
 
 Router.route('/orders', {name: 'orders.index'});
-Router.route('/orders/new', {name: 'orders.new'});
+Router.route('/orders/upload', {name: 'orders.upload'});
 Router.route('/orders/cart', {name: 'orders.cart'});
-Router.route('/:_order_id/order_items/:_order_item_id', {name: 'order.items.configure'});
+Router.route('/orders/configure/:_id', {name: 'orders.configure'});
 
 Router.route('/papers', {name: 'papers.index'});
 Router.route('/prices', {name: 'prices.index'});
@@ -56,4 +56,4 @@ var requireLogin = function() {
 	}
 };
 
-Router.onBeforeAction(requireLogin, {only: ['orders.index', 'orders.new', 'orders.cart', 'orders.items.new']});
+Router.onBeforeAction(requireLogin, {only: ['orders.index', 'orders.upload', 'order.configure', 'orders.cart', 'orders.items.new']});

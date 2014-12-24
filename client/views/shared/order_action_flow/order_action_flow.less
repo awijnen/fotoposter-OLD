@@ -1,0 +1,155 @@
+/*****************************************************************************/
+/* OrderActionFlow: Style */
+/*****************************************************************************/
+@import "/client/lib/custom.bootstrap.import.less";
+@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700);
+/* written by riliwan balogun http://www.facebook.com/riliwan.rabo*/
+
+.orderactionflow {
+	.board {
+		background: #fff;
+		/*box-shadow: 10px 10px #ccc,-10px 20px #ddd;*/
+	}
+	.board .nav-tabs {
+		position: relative;
+		border-bottom: 0;
+		/* width: 80%; */
+
+		margin: 40px auto;
+		margin-bottom: 0;
+		box-sizing: border-box;
+	}
+	p.narrow {
+		width: 60%;
+		margin: 10px auto;
+	}
+	.liner {
+		height: 2px;
+		background: @gray-lighter;
+		position: absolute;
+		width: 70%;
+		margin: 0 auto;
+		left: 0;
+		right: 0;
+		top: 50%;
+		z-index: 1;
+	}
+	.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+		color: #555555;
+		cursor: default;
+		border: 0;
+		border-bottom-color: transparent;
+	}
+	span.round-tabs {
+		width: 70px;
+		height: 70px;
+		line-height: 70px;
+		display: inline-block;
+		border-radius: 100px;
+		background: white;
+		z-index: 2;
+		position: absolute;
+		left: 0;
+		text-align: center;
+		font-size: 25px;
+	}
+	span.round-tabs.one {
+		color: @gray-lighter;
+		border: 2px solid @gray-lighter;
+	}
+	li.active span.round-tabs.one {
+		background: #fff !important;
+		border: 2px solid @brand-success;
+		color: @brand-success;
+	}
+	span.round-tabs.two {
+		color: @gray-lighter;
+		border: 2px solid @gray-lighter;
+	}
+	li.active span.round-tabs.two {
+		background: #fff !important;
+		border: 2px solid @brand-warning;
+		color: @brand-warning;
+	}
+	span.round-tabs.three {
+		color: @gray-lighter;
+		border: 2px solid @gray-lighter;
+	}
+	li.active span.round-tabs.three {
+		background: #fff !important;
+		border: 2px solid @brand-primary;
+		color: @brand-primary;
+	}
+	.nav-tabs > li.active > a span.round-tabs {
+		background: #fafafa;
+	}
+	.nav-tabs > li {
+		width: 33.3333%;
+	}
+	.nav-tabs > li a {
+		width: 70px;
+		height: 70px;
+		margin: 20px auto;
+		border: none;
+		border-radius: 100%;
+		padding: 0;
+	}
+	.tab-content {} .tab-pane {
+		position: relative;
+		padding-top: 25px;
+	}
+	.tab-content .head {
+		font-family: 'Roboto Condensed', sans-serif;
+		font-size: 25px;
+		text-transform: uppercase;
+		padding-bottom: 10px;
+	}
+	.btn-outline-rounded {
+		padding: 10px 40px;
+		margin: 20px 0;
+		border: 2px solid transparent;
+		border-radius: 25px;
+	}
+	.btn.green {
+		background-color: #5cb85c;
+		color: #ffffff;
+	}
+	.orderactionflow-title {
+		text-align: center;
+	}
+	li.active .orderactionflow-title.one {
+		color: @brand-success;
+	}
+	li.active .orderactionflow-title.two {
+		color: @brand-warning;
+	}
+	li.active .orderactionflow-title.three {
+		color: @brand-primary;
+	}
+}
+
+@media( max-width: 585px) {
+	.orderactionflow {
+		.board {
+			width: 90%;
+			height: auto !important;
+		}
+		span.round-tabs {
+			font-size: 16px;
+			width: 50px;
+			height: 50px;
+			line-height: 50px;
+		}
+		.tab-content .head {
+			font-size: 20px;
+		}
+		.nav-tabs > li a {
+			width: 50px;
+			height: 50px;
+			line-height: 50px;
+		}
+		.btn-outline-rounded {
+			padding: 12px 20px;
+		}
+	}
+}

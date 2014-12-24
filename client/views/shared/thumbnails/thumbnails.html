@@ -1,0 +1,11 @@
+<template name="Thumbnails">
+	<div class="row">
+		<h3>Aantal fotos: <span>{{numberOfOrderItems}}</span></h3>
+
+	    {{#each orderItemsInCurrentOrder}}
+		    <div class="col-xs-6 col-md-3">
+		        {{> Thumbnail}}
+		    </div>
+		{{/each}}
+	</div>
+</template>

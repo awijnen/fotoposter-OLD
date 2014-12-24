@@ -1,7 +1,7 @@
 /*****************************************************************************/
-/* OrdersCart: Event Handlers and Helpersss .js*/
+/* OrderActionFlow: Event Handlers and Helpersss .js*/
 /*****************************************************************************/
-Template.OrdersCart.events({
+Template.OrderActionFlow.events({
   /*
    * Example:
    *  'click .selector': function (e, tmpl) {
@@ -10,20 +10,23 @@ Template.OrdersCart.events({
    */
 });
 
-Template.OrdersCart.helpers({
-  	orderItems: function() {
-	    return OrderItems.find({orderId: this._id});
-	},
+Template.OrderActionFlow.helpers({
+  /*
+   * Example:
+   *  items: function () {
+   *    return Items.find();
+   *  }
+   */
 });
 
 /*****************************************************************************/
-/* OrdersCart: Lifecycle Hooks */
+/* OrderActionFlow: Lifecycle Hooks */
 /*****************************************************************************/
-Template.OrdersCart.created = function () {
+Template.OrderActionFlow.created = function () {
 };
 
-Template.OrdersCart.rendered = function () {
+Template.OrderActionFlow.rendered = function () {
 };
 
-Template.OrdersCart.destroyed = function () {
+Template.OrderActionFlow.destroyed = function () {
 };

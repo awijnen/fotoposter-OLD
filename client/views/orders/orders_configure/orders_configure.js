@@ -1,7 +1,7 @@
 /*****************************************************************************/
-/* OrderItemsConfigure: Event Handlers and Helpersss .js*/
+/* OrdersConfigure: Event Handlers and Helpersss .js*/
 /*****************************************************************************/
-Template.OrderItemsConfigure.events({
+Template.OrdersConfigure.events({
     /*
      * Example:
      *  'click .selector': function (e, tmpl) {
@@ -10,15 +10,15 @@ Template.OrderItemsConfigure.events({
      */
 });
 
-Template.OrderItemsConfigure.helpers({
+Template.OrdersConfigure.helpers({
 
 });
 
 /*****************************************************************************/
-/* OrderItemsConfigure: Lifecycle Hooks */
+/* OrdersConfigure: Lifecycle Hooks */
 /*****************************************************************************/
-Template.OrderItemsConfigure.created = function() {};
+Template.OrdersConfigure.created = function() {};
 
-Template.OrderItemsConfigure.rendered = function() {};
+Template.OrdersConfigure.rendered = function() {};
 
-Template.OrderItemsConfigure.destroyed = function() {};
+Template.OrdersConfigure.destroyed = function() {};

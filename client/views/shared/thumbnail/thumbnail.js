@@ -1,7 +1,7 @@
 /*****************************************************************************/
-/* OrdersCart: Event Handlers and Helpersss .js*/
+/* Thumbnail: Event Handlers and Helpersss .js*/
 /*****************************************************************************/
-Template.OrdersCart.events({
+Template.Thumbnail.events({
   /*
    * Example:
    *  'click .selector': function (e, tmpl) {
@@ -10,20 +10,17 @@ Template.OrdersCart.events({
    */
 });
 
-Template.OrdersCart.helpers({
-  	orderItems: function() {
-	    return OrderItems.find({orderId: this._id});
-	},
+Template.Thumbnail.helpers({
 });
 
 /*****************************************************************************/
-/* OrdersCart: Lifecycle Hooks */
+/* Thumbnail: Lifecycle Hooks */
 /*****************************************************************************/
-Template.OrdersCart.created = function () {
+Template.Thumbnail.created = function () {
 };
 
-Template.OrdersCart.rendered = function () {
+Template.Thumbnail.rendered = function () {
 };
 
-Template.OrdersCart.destroyed = function () {
+Template.Thumbnail.destroyed = function () {
 };

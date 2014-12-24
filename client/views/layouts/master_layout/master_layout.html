@@ -4,9 +4,9 @@
     <div class="container">
     {{> notifications}}
 
-	    <div class="row">
-        	{{> yield}}
-	    </div>
+    {{> yield 'orderActionFlow'}}
+
+	{{> yield}}
 
     </div>
 </template>

@@ -1,9 +1,9 @@
-OrderItemsConfigureController = RouteController.extend({
+OrdersConfigureController = RouteController.extend({
   waitOn: function () {},
 
   data: function () {
-  	var orderItemId = this.params._order_item_id;
-  	return OrderItems.findOne(orderItemId);
+  	// var orderItemId = this.params._id;
+  	// return OrderItems.findOne(orderItemId);
   },
 
   action: function () {
@@ -11,7 +11,7 @@ OrderItemsConfigureController = RouteController.extend({
   }
 });
 
-OrderItemsConfigureController.helpers({
+OrdersConfigureController.helpers({
 	getOrderId: function(orderId) {
     	return Orders.findOne(orderId)._id;
     }

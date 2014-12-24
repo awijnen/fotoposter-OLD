@@ -1,0 +1,44 @@
+<template name="OrdersUpload">
+    <div class="ordersupload">
+        <div class="row">
+            <div class="col-xs-12">
+            	<div>
+            		<span>Current Order ID: </span><span>{{currentOrderId}}</span>
+            	</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="ordersupload-uploadarea">
+                    <h3>Upload Area</h3>
+                    <div class="ordersupload-uploadform">
+                        <input id="ordersupload-uploadcontrol" type="file" name="upload" multiple />
+                        <button name="submit" class="btn btn-primary ordersupload-uploadsubmit">Upload</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-sm-offset-2">
+            	{{> OrdersOpen}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                {{#if uploadingFiles}} {{> Loading}} {{/if}}
+            </div>
+            <div class="col-xs-12">
+                {{#if orderItemsLoaded}}
+                <div>
+                    {{> Thumbnails}}
+                </div>
+
+                <div>
+                    <h3>Actie</h3>
+                    <a href="{{pathFor 'orders.configure'}}">
+                    	<button class="ordersupload-configurebutton">Ga verder</button>
+                    </a>
+                </div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</template>
