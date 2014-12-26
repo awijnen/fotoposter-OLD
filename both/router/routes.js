@@ -8,7 +8,6 @@ Router.configure({
     waitOn: function() {
 		return [
 					Meteor.subscribe('orders_index', {userId: Meteor.userId()}),
-					Meteor.subscribe('order_items_index', {userId: Meteor.userId()}),
 					Meteor.subscribe('papers_index'),
 					Meteor.subscribe('finishes_index'),
 					Meteor.subscribe('suspensions_index'),

@@ -1,9 +1,9 @@
 OrdersConfigureController = RouteController.extend({
-	waitOn: function () {},
-
-	data: function () {
-		return OrderItems.findOne({orderId: this.params._id});
+	waitOn: function () {
+		Meteor.subscribe('order_items_index', {userId: Meteor.userId(), orderId: this.params._id});
 	},
+
+	data: function () {},
 
 	action: function () {
 		this.render();
@@ -11,7 +11,8 @@ OrdersConfigureController = RouteController.extend({
 });
 
 OrdersConfigureController.helpers({
-	getOrderId: function(orderId) {
-			return Orders.findOne(orderId)._id;
-		}
+	getOrderId: function() {
+		var orderId = this.params._id;
+		return Orders.findOne(orderId)._id;
+	}
 });

@@ -34,7 +34,12 @@
 
             <div>
                 <div class="row">
-                    {{> OrdersUploadThumbnails route='orders.upload'}}
+                    <h3>Aantal fotos: <span>{{currentOrderItems 'count'}}</span></h3>
+                    {{#each currentOrderItems 'orderItems'}}
+                        <div class="col-xs-4">
+                            {{> Thumbnail}}
+                        </div>
+                    {{/each}}
                 </div>
 
                 <hr>

@@ -3,6 +3,7 @@
 /*****************************************************************************/
 _.extend(App, {
 	sessionArrayPush: function(sessionArrayKey, newKey, newValue) {
+		Session.setDefault(sessionArrayKey, []);
 		var sessionArray = Session.get(sessionArrayKey);
 		var pushObject = {};
 		pushObject[newKey] = newValue;
@@ -14,6 +15,19 @@ _.extend(App, {
 		var sessionArray = Session.get(sessionArrayKey);
 		sessionArray.pop();
 		Session.set(sessionArrayKey, sessionArray);
+	},
+
+	sessionArrayPopWithKeyValue: function(sessionArrayKey, searchKey, searchValue) {
+		var sessionArray = Session.get(sessionArrayKey);
+		var _sessionArray = _.map(sessionArray, function(obj) {
+			if (obj[searchKey] !== searchValue) {
+				return obj;
+			} else {
+				return false;
+			}
+		});
+
+		Session.set(sessionArrayKey, _sessionArray);
 	},
 
 	clearFileForm: function(elementId) {

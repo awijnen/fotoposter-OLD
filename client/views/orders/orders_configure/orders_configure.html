@@ -7,8 +7,10 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="ordersconfigure-itemcontainer">
-                            {{> Thumbnail}}
-                            <p>Order Item: <span>{{_id}}</span></p>
+                            {{#each currentOrderItems}}
+                                {{> Thumbnail}}
+                                <p>Order Item: <span>{{_id}}</span></p>
+                            {{/each}}
                         </div>
                     </div>
                 </div>
@@ -16,7 +18,7 @@
 
             <div class="col-sm-4 col-sm-offset-1">
                 <div class="ordersconfigure-update">
-                    <form role="form">
+                    <form role="form" class="ordersconfigure-form">
                         <div class="form-group">
                             <label>
                                 Aantal:
@@ -47,7 +49,7 @@
                                 Afwerking:
                                 <select class="form-control" name="finish">
                                     {{#each finishes}}
-                                    <option value="{{_id}}">{{name}}</option>
+                                        <option value="{{_id}}">{{name}}</option>
                                     {{/each}}
                                 </select>
                             </label>
@@ -73,19 +75,29 @@
         <hr>
 
         <div class="row">
-            {{> OrdersConfigureThumbnails route='orders.configure'}}
+            <h3>Te configureren: <span>{{orderItemsConfiguring 'count'}}</span></h3>
+            {{#each orderItemsConfiguring 'orderItems'}}
+                <div class="col-xs-4">
+                    {{> Thumbnail}}
+                </div>
+            {{/each}}
         </div>
 
         <hr>
 
         <div class="row">
-            {{> OrdersConfiguredThumbnails route='orders.configured'}}
+            <h3>Geconfigureerd: <span>{{orderItemsConfigured 'count'}}</span></h3>
+            {{#each orderItemsConfigured 'orderItems'}}
+                <div class="col-xs-4">
+                    {{> Thumbnail}}
+                </div>
+            {{/each}}
         </div>
 
         <hr>
 
         <div class="row">
-             <p>Order: <span>{{getOrderId orderId}}</span></p>
+             <p>Order: <span>{{getOrderId}}</span></p>
              <button type="submit" class="btn btn-primary ordersconfigure-delete">Verwijder Order Item</button>
         </div>
     </div>

@@ -63,6 +63,17 @@ Template.OrdersUpload.helpers({
 
     currentOrderId: function() {
     	return Session.get('currentOrderId');
+    },
+
+    currentOrderItems: function(key) {
+        var orderId = Session.get('currentOrderId');
+        var orderItems = OrderItems.find({orderId: orderId});
+        var result = {
+            orderItems: orderItems,
+            count: orderItems.count()
+        };
+
+        return result[key];
     }
 });
 
