@@ -19,7 +19,7 @@ _.extend(App, {
 
 	sessionArrayPopWithKeyValue: function(sessionArrayKey, searchKey, searchValue) {
 		var sessionArray = Session.get(sessionArrayKey);
-		var _sessionArray = _.map(sessionArray, function(obj) {
+		var _sessionArray = sessionArray.filter(function(obj) {
 			if (obj[searchKey] !== searchValue) {
 				return obj;
 			} else {
@@ -44,6 +44,7 @@ _.extend(App, {
 			console.log('Done uploading files');
 		} else {
 			var file = fileArray.shift();
+
 			var uploader = new Slingshot.Upload("myFileUploads");
 			var uploadDone = function(err, cloudStorageUrl) {
 				onUploadDone(err, cloudStorageUrl);
@@ -79,7 +80,7 @@ _.extend(App, {
 
 		if (_.isEmpty(sessionArray)) {
 			// sessionArray is empty
-			console.log('SessionArray is now empty');
+			console.log('Done adding order items to order. SessionArray is now empty.\n');
 			console.log('setting "uploading" to false');
 			Session.set('uploading', false);
 		} else {
@@ -95,11 +96,36 @@ _.extend(App, {
 				if (error) {
 					throw new Error('orderItemInsert method malfunction');
 				} else {
-					console.log("Created OrderItem ('" + orderItemId + "'') as part of Order ('" + orderId + "')");
+					console.log("Created OrderItem ('" + orderItemId + "') as part of Order ('" + orderId + "')");
 					onOrderItemDone();
 
 					// Add another OrderItem
 					App.addOrderItemsToOrder(sessionArrayKey, key, orderId, onOrderItemDone);
+				}
+			});
+		}
+	},
+
+	updateOrderItems: function(sessionArrayKey, orderItemAttributes, onLastOrderItemDone) {
+		var sessionArray = Session.get(sessionArrayKey);
+
+		if (_.isEmpty(sessionArray)) {
+			console.log('Done updating order items. SessionArray is now empty.\n');
+			Session.set('updating', false);
+			onLastOrderItemDone();
+		} else {
+			var orderItem = sessionArray.shift();
+			var orderItemId = orderItem.orderItemId;
+
+			Meteor.call('orderItemUpdate', orderItemId, orderItemAttributes, function(err, res) {
+				if (err) {
+					throw new Error(err);
+				} else {
+					// remove OrderItem from being-configured session variable
+					App.sessionArrayPopWithKeyValue('orderItemsBeingConfigured', 'orderItemId', orderItemId);
+
+					// insert next OrderItem
+					App.updateOrderItems(sessionArrayKey, orderItemAttributes, onLastOrderItemDone);
 				}
 			});
 		}

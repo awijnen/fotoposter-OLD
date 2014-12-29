@@ -43,8 +43,16 @@ Template.OrdersUpload.events({
         };
 
         App.uploadFileArray(files, onUploadDone, onLastUploadDone);
+    },
 
+    'change .ordersopen select': function(e, templ) {
+        var val = templ.find('select').value;
 
+        if (val === 'new_order') {
+            Session.set('currentOrderId');
+        } else {
+            Session.set('currentOrderId', val);
+        }
     }
 });
 
@@ -81,6 +89,7 @@ Template.OrdersUpload.helpers({
 /* Upload: Lifecycle Hooks */
 /*****************************************************************************/
 Template.OrdersUpload.created = function() {
+    Session.set('currentOrderId');
     Session.set('imageUrlArray', []);
     Session.set('uploading', false);
 };

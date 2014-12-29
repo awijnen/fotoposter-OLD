@@ -37,7 +37,9 @@
                     <h3>Aantal fotos: <span>{{currentOrderItems 'count'}}</span></h3>
                     {{#each currentOrderItems 'orderItems'}}
                         <div class="col-xs-4">
-                            {{> Thumbnail}}
+                            <div class="thumbnail ordersupload-thumbnail">
+                                {{> Thumbnail}}
+                            </div>
                         </div>
                     {{/each}}
                 </div>

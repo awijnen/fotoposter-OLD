@@ -19,5 +19,12 @@ Meteor.methods({
         });
 
         return OrderItems.insert(orderItem);
+    },
+
+    orderItemUpdate: function(id, orderItemAttributes) {
+        return OrderItems.update(
+            {_id: id},
+            {$set: orderItemAttributes}
+        );
     }
 });

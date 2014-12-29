@@ -6,10 +6,10 @@
             <div class="col-sm-5 col-sm-offset-1">
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="ordersconfigure-itemcontainer">
+                        <div class="ordersconfigure-itemcontainer thumbnail">
                             {{#each currentOrderItems}}
                                 {{> Thumbnail}}
-                                <p>Order Item: <span>{{_id}}</span></p>
+                                {{> ConfiguringThumbnailOverlay}}
                             {{/each}}
                         </div>
                     </div>
@@ -64,6 +64,12 @@
                                 </select>
                             </label>
                         </div>
+                        <div class="form-group">
+                            <label>
+                                Lamineer:
+                                <input type="checkbox" name="laminate">
+                            </label>
+                        </div>
                         <button type="submit" class="btn btn-primary ordersconfigure-save">Opslaan</button>
 
                     </form>
@@ -75,10 +81,13 @@
         <hr>
 
         <div class="row">
-            <h3>Te configureren: <span>{{orderItemsConfiguring 'count'}}</span></h3>
-            {{#each orderItemsConfiguring 'orderItems'}}
+            <h3>Te configureren: <span>{{orderItemsConfigured 'count' false}}</span></h3>
+            {{#each orderItemsConfigured 'orderItems' false}}
                 <div class="col-xs-4">
-                    {{> Thumbnail}}
+                    <div class="thumbnail ordersconfigure-thumbnail">
+                        {{> Thumbnail}}
+                        {{> ConfigureThumbnailOverlay}}
+                    </div>
                 </div>
             {{/each}}
         </div>
@@ -86,10 +95,13 @@
         <hr>
 
         <div class="row">
-            <h3>Geconfigureerd: <span>{{orderItemsConfigured 'count'}}</span></h3>
-            {{#each orderItemsConfigured 'orderItems'}}
+            <h3>Geconfigureerd: <span>{{orderItemsConfigured 'count' true}}</span></h3>
+            {{#each orderItemsConfigured 'orderItems' true}}
                 <div class="col-xs-4">
-                    {{> Thumbnail}}
+                    <div class="thumbnail ordersconfigure-thumbnail">
+                        {{> Thumbnail}}
+                        {{> ConfigureThumbnailOverlay}}
+                    </div>
                 </div>
             {{/each}}
         </div>
