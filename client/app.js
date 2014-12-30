@@ -11,6 +11,13 @@ _.extend(App, {
 		Session.set(sessionArrayKey, sessionArray);
 	},
 
+	sessionArrayPushObject: function(sessionArrayKey, newObject) {
+		Session.setDefault(sessionArrayKey, []);
+		var sessionArray = Session.get(sessionArrayKey);
+		sessionArray.push(newObject);
+		Session.set(sessionArrayKey, sessionArray);
+	},
+
 	sessionArrayPop: function(sessionArrayKey) {
 		var sessionArray = Session.get(sessionArrayKey);
 		sessionArray.pop();
@@ -40,27 +47,54 @@ _.extend(App, {
 
 	uploadFileArray: function(fileArray, onUploadDone, onLastUploadDone) {
 		if (_.isEmpty(fileArray)) {
-			onLastUploadDone();
+			onLastUploadDone(fileArray);
 			console.log('Done uploading files');
 		} else {
 			var file = fileArray.shift();
+			onUploadDone.context ={
+				file: file,
+				fileArray: fileArray,
+				onUploadDone: onUploadDone,
+				onLastUploadDone: onLastUploadDone
+			};
 
 			var uploader = new Slingshot.Upload("myFileUploads");
+			window.fotoposter.file_being_handled = file;
 			var uploadDone = function(err, cloudStorageUrl) {
-				onUploadDone(err, cloudStorageUrl);
-				return App.uploadFileArray(fileArray, onUploadDone, onLastUploadDone);
+				onUploadDone.callback(err, cloudStorageUrl);
 			};
 			uploader.send(file, uploadDone);
 		}
 	},
 
-	getOrCreateOrder: function(orderAttributes, onOrderDone, sessionArrayKey, imageUrlKey, onOrderItemDone) {
+	getDimensions: function(context) {
+
+		var _URL = window.URL || window.webkitURL;
+		var pushObject = {};
+	    var image = new Image();
+	    image.context = context;
+
+        image.onload = function(event) {
+            pushObject.width = this.width;
+            pushObject.height = this.height;
+            pushObject.url = this.context.cloudStorageUrl;
+
+            console.log('Pushing "' + JSON.stringify(pushObject) + '" in Session variable ' + this.context.sessionArrayKey + '...');
+            App.sessionArrayPushObject(this.context.sessionArrayKey, pushObject);
+
+            // Upload next file
+            App.uploadFileArray(this.context.fileArray, this.context.onUploadDone, this.context.onLastUploadDone);
+        };
+
+        image.src = _URL.createObjectURL(context.file);
+	},
+
+	getOrCreateOrder: function(orderAttributes, onOrderDone, sessionArrayKey, onOrderItemDone) {
 		var orderId;
 
 		if (Session.get('currentOrderId')) {
 			orderId = Session.get('currentOrderId');
-			// onOrderDone();
-			App.addOrderItemsToOrder(sessionArrayKey, imageUrlKey, orderId, onOrderItemDone);
+			App.addOrderItemsToOrder(sessionArrayKey, orderId, onOrderItemDone);
 		} else {
 			orderId = Meteor.call('orderInsert', orderAttributes, function(error, orderId, onOrderDone) {
 				if (error) {
@@ -68,14 +102,13 @@ _.extend(App, {
 				} else {
 					console.log("Created order with Order ID: ('" + orderId + "')");
 					Session.set('currentOrderId', orderId);
-					// onOrderDone();
-					App.addOrderItemsToOrder(sessionArrayKey, imageUrlKey, orderId, onOrderItemDone);
+					App.addOrderItemsToOrder(sessionArrayKey, orderId, onOrderItemDone);
 				}
 			});
 		}
 	},
 
-	addOrderItemsToOrder: function(sessionArrayKey, key, orderId, onOrderItemDone) {
+	addOrderItemsToOrder: function(sessionArrayKey, orderId, onOrderItemDone) {
 		var sessionArray = Session.get(sessionArrayKey);
 
 		if (_.isEmpty(sessionArray)) {
@@ -84,11 +117,14 @@ _.extend(App, {
 			console.log('setting "uploading" to false');
 			Session.set('uploading', false);
 		} else {
-			var imageUrl = sessionArray.shift()[key];
+			// take first item out of the sessionArray
+			var pushObject = sessionArray.shift();
 			Session.set(sessionArrayKey, sessionArray);
 			var orderItemAttributes = {
 				orderId: orderId,
-				image: imageUrl,
+				image: pushObject.url,
+				image_width: pushObject.width,
+				image_height: pushObject.height,
 				configured: false
 			};
 
@@ -97,10 +133,9 @@ _.extend(App, {
 					throw new Error('orderItemInsert method malfunction');
 				} else {
 					console.log("Created OrderItem ('" + orderItemId + "') as part of Order ('" + orderId + "')");
-					onOrderItemDone();
 
 					// Add another OrderItem
-					App.addOrderItemsToOrder(sessionArrayKey, key, orderId, onOrderItemDone);
+					App.addOrderItemsToOrder(sessionArrayKey, orderId, onOrderItemDone);
 				}
 			});
 		}

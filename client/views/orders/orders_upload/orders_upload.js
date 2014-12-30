@@ -3,6 +3,8 @@
 /*****************************************************************************/
 Template.OrdersUpload.events({
     'click .ordersupload-uploadsubmit': function(e, templ) {
+        window.fotoposter = {};
+
         Session.set('uploading', true);
         var fileFormId = 'ordersupload-uploadcontrol';
         var fileFormControl = document.getElementById(fileFormId);
@@ -27,19 +29,25 @@ Template.OrdersUpload.events({
         	console.log('onOrderDone callback executed');
         };
 
-        var onUploadDone = function(err, cloudStorageUrl) {
+        var onLastUploadDone = function(fileArray) {
+            App.clearFileForm(fileFormId);
+            Session.set('uploading', false);
+            App.getOrCreateOrder(orderAttributes, onOrderDone, sessionArrayKey, imageUrlKey, onOrderItemDone);
+        };
+
+        var onUploadDone = {
+            context: {}
+        };
+
+        onUploadDone.callback = function(err, cloudStorageUrl) {
             if (err) {
                 console.dir(err);
             } else {
-                console.log('Pushing "' + cloudStorageUrl + '" in Session variable "imageUrlArray" ...');
-                App.sessionArrayPush(sessionArrayKey, imageUrlKey, cloudStorageUrl);
-            }
-        };
+                this.context.cloudStorageUrl = cloudStorageUrl;
+                this.context.sessionArrayKey = sessionArrayKey;
 
-        var onLastUploadDone = function() {
-        	App.clearFileForm(fileFormId);
-        	Session.set('uploading', false);
-        	App.getOrCreateOrder(orderAttributes, onOrderDone, sessionArrayKey, imageUrlKey, onOrderItemDone);
+                App.getDimensions(this.context);
+            }
         };
 
         App.uploadFileArray(files, onUploadDone, onLastUploadDone);
