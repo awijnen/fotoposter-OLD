@@ -21,18 +21,10 @@ Template.OrdersUpload.events({
             price: 100,
         };
 
-        var onOrderItemDone = function() {
-        	console.log('onOrderItemDone callback executed');
-    	};
-
-        var onOrderDone = function() {
-        	console.log('onOrderDone callback executed');
-        };
-
         var onLastUploadDone = function(fileArray) {
             App.clearFileForm(fileFormId);
             Session.set('uploading', false);
-            App.getOrCreateOrder(orderAttributes, onOrderDone, sessionArrayKey, imageUrlKey, onOrderItemDone);
+            App.getOrCreateOrder(orderAttributes, sessionArrayKey);
         };
 
         var onUploadDone = {

@@ -89,12 +89,12 @@ _.extend(App, {
         image.src = _URL.createObjectURL(context.file);
 	},
 
-	getOrCreateOrder: function(orderAttributes, onOrderDone, sessionArrayKey, onOrderItemDone) {
+	getOrCreateOrder: function(orderAttributes, sessionArrayKey) {
 		var orderId;
 
 		if (Session.get('currentOrderId')) {
 			orderId = Session.get('currentOrderId');
-			App.addOrderItemsToOrder(sessionArrayKey, orderId, onOrderItemDone);
+			App.addOrderItemsToOrder(sessionArrayKey, orderId);
 		} else {
 			orderId = Meteor.call('orderInsert', orderAttributes, function(error, orderId, onOrderDone) {
 				if (error) {
@@ -102,13 +102,13 @@ _.extend(App, {
 				} else {
 					console.log("Created order with Order ID: ('" + orderId + "')");
 					Session.set('currentOrderId', orderId);
-					App.addOrderItemsToOrder(sessionArrayKey, orderId, onOrderItemDone);
+					App.addOrderItemsToOrder(sessionArrayKey, orderId);
 				}
 			});
 		}
 	},
 
-	addOrderItemsToOrder: function(sessionArrayKey, orderId, onOrderItemDone) {
+	addOrderItemsToOrder: function(sessionArrayKey, orderId) {
 		var sessionArray = Session.get(sessionArrayKey);
 
 		if (_.isEmpty(sessionArray)) {
@@ -135,7 +135,7 @@ _.extend(App, {
 					console.log("Created OrderItem ('" + orderItemId + "') as part of Order ('" + orderId + "')");
 
 					// Add another OrderItem
-					App.addOrderItemsToOrder(sessionArrayKey, orderId, onOrderItemDone);
+					App.addOrderItemsToOrder(sessionArrayKey, orderId);
 				}
 			});
 		}
@@ -184,6 +184,7 @@ App.helpers = {
 	},
 
 	selected: function(val1, val2) {
+		debugger;
 		return val1 === val2 ? ' selected' : '';
 	},
 

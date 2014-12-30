@@ -44,17 +44,39 @@ Template.OrdersConfigure.helpers({
 		return OrderItems.find({
 			_id: {$in: ids},
 			orderId: orderId}
-		);	
+		);
 	},
 
 	orderItemsConfigured: function(key, isConfigured) {
-		var orderItems = OrderItems.find({configured: isConfigured});
+		var orderItemsBeingConfigured = _.map(Session.get('orderItemsBeingConfigured'), function(obj) {
+			return obj.orderItemId;
+		});
+
+		var orderItems = OrderItems.find({
+			configured: isConfigured,
+			_id: {
+				$nin: orderItemsBeingConfigured
+			}
+		});
+
 		var result = {
 			orderItems: orderItems,
 			count: orderItems.count()
 		};
 
 		return result[key];
+	},
+
+	currentOrderItem: function(key) {
+		var firstOrderItemBeinfConfigured = Session.get('orderItemsBeingConfigured')[0];
+
+		if (firstOrderItemBeinfConfigured) {
+			var orderItem = OrderItems.findOne(firstOrderItemBeinfConfigured.orderItemId);
+
+			if (orderItem[key]) { return orderItem[key]; }
+		}
+
+		return '';
 	}
 });
 
@@ -64,6 +86,7 @@ Template.OrdersConfigure.helpers({
 Template.OrdersConfigure.created = function() {
 	var orderId = Iron.controller().params._id;
 	Session.set('currentOrderId', orderId);
+	Session.setDefault('orderItemsBeingConfigured', []);
 
 	// On creation select the first order item belonging to the current order that hasn't been configured yet.
 	var firstOrderItem = OrderItems.findOne({configured: false, orderId: orderId});
@@ -74,6 +97,55 @@ Template.OrdersConfigure.created = function() {
 	}
 };
 
-Template.OrdersConfigure.rendered = function() {};
+Template.OrdersConfigure.rendered = function() {
+	var syncFormValues = function() {
+		var firstOrderItemBeinfConfigured = Session.get('orderItemsBeingConfigured')[0];
+
+		var templ = Template.instance();
+		var paper = $('select[name="paper"]');
+		var finish = $('select[name="finish"]');
+		var suspension = $('select[name="suspension"]');
+		var laminate = $('input[name="laminate"]');
+
+		if (firstOrderItemBeinfConfigured) {
+			var orderItem = OrderItems.findOne(firstOrderItemBeinfConfigured.orderItemId);
+
+			var paper_db = Papers.findOne(orderItem.paper);
+			var finish_db = Finishes.findOne(orderItem.finish);
+			var suspension_db = Suspensions.findOne(orderItem.suspension);
+
+			if (paper_db) {
+				paper.val(paper_db._id);
+			} else {
+				paper.val('');
+			}
+
+			if (finish_db) {
+				finish.val(finish_db._id);
+			} else {
+				finish.val('');
+			}
+
+			if (suspension_db) {
+				suspension.val(suspension_db._id);
+			} else {
+				suspension.val('');
+			}
+
+			if (!!orderItem.laminate) {
+				laminate.prop('checked', true);
+			} else {
+				laminate.prop('checked', false);
+			}
+		} else {
+			paper.val('');
+			finish.val('');
+			suspension.val('');
+			laminate.prop('checked', false);
+		}
+	};
+
+	this.autorun(syncFormValues);
+};
 
 Template.OrdersConfigure.destroyed = function() {};
