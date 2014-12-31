@@ -4,7 +4,14 @@ Template.Signup.events({
 
         // retrieve the input field values
         var email = templ.find('input[name=email]').value,
-            password = templ.find('input[name=password]').value;
+            password = templ.find('input[name=password]').value,
+            firstname = templ.find('input[name=firstname]').value,
+            lastname = templ.find('input[name=lastname]').value,
+            street = templ.find('input[name=street]').value,
+            nr = templ.find('input[name=nr]').value,
+            city = templ.find('input[name=city]').value,
+            zip = templ.find('input[name=zip]').value,
+            country = templ.find('input[name=country]').value;
 
         // Trim & Validate
         // trim helper
@@ -28,7 +35,20 @@ Template.Signup.events({
         // Crreate loginObject for use below
         var loginObject = {
             email: email,
-            password: password
+            password: password,
+            profile: {
+                firstname: firstname,
+                lastname: lastname,
+                addresses: [
+                    {
+                        street: street,
+                        nr: nr,
+                        city: city,
+                        zip: zip,
+                        country: country
+                    }
+                ]
+            }
         };
 
 

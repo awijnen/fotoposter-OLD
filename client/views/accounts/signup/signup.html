@@ -1,9 +1,24 @@
 <template name="Signup">
-	<form class="signup-form">
-	 	<div>
-			<input type="email" name="email" />
-			<input type="password" name="password" />
-			<input type="submit" value="Sign Up" class="btn btn-primary submit" />
+	<div class="row">
+		<div class="col-sm-4">
+			<form role="form" class="signup-form">
+			 	<div class="form-group">
+					<label>Email: <input class="form-control" type="email" name="email" /></label>
+					<label>Wachtwoord: <input class="form-control" type="password" name="password" /></label>
+				</div>
+				<div class="form-group">
+					<label>Voornaam: <input class="form-control" type="text" name="firstname" /></label>
+					<label>Achternaam: <input class="form-control" type="text" name="lastname" /></label>
+				</div>
+				<div class="form-group">
+					<label>Straat: <input class="form-control" type="text" name="street" /></label>
+					<label>Nr: <input class="form-control" type="text" name="nr" /></label>
+					<label>Stad: <input class="form-control" type="text" name="city" /></label>
+					<label>Post code: <input class="form-control" type="text" name="zip" /></label>
+					<label>Land: <input class="form-control" type="text" name="country" /></label>
+				</div>
+				<input type="submit" value="Sign Up" class="btn btn-primary submit" />
+			</form>
 		</div>
-	</form>
+	</div>
 </template>

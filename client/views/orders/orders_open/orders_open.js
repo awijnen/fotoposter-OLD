@@ -22,6 +22,20 @@ Template.OrdersOpen.helpers({
 /*****************************************************************************/
 Template.OrdersOpen.created = function() {};
 
-Template.OrdersOpen.rendered = function() {};
+Template.OrdersOpen.rendered = function() {
+	var syncDropdown = function() {
+		var templ = Template.instance();
+		var dropdown = $('select[name="ordersopen-dropdown"]');
+		var currentOrderId = Session.get('currentOrderId');
+
+		if (currentOrderId) {
+			dropdown.val(currentOrderId);
+		} else {
+			dropdown.val('new_order');
+		}
+	};
+
+	this.autorun(syncDropdown);
+};
 
 Template.OrdersOpen.destroyed = function() {};

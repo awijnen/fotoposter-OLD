@@ -7,6 +7,7 @@ Router.configure({
     notFoundTemplate: 'NotFound',
     waitOn: function() {
 		return [
+					Meteor.subscribe('userData'),
 					Meteor.subscribe('orders_index', {userId: Meteor.userId()}),
 					Meteor.subscribe('papers_index'),
 					Meteor.subscribe('finishes_index'),
@@ -55,4 +56,4 @@ var requireLogin = function() {
 	}
 };
 
-Router.onBeforeAction(requireLogin, {only: ['orders.index', 'orders.upload', 'orders.configure', 'orders.cart', 'orders.items.new']});
+Router.onBeforeAction(requireLogin, {only: ['orders.index', 'orders.upload', 'orders.configure', 'orders.confirm', 'orders.cart']});
