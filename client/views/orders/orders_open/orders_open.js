@@ -20,7 +20,11 @@ Template.OrdersOpen.helpers({
 /*****************************************************************************/
 /* OrdersOpen: Lifecycle Hooks */
 /*****************************************************************************/
-Template.OrdersOpen.created = function() {};
+Template.OrdersOpen.created = function() {
+	var controller = Iron.controller();
+	var orderId = controller.params.hash;
+	Session.set('currentOrderId', orderId);
+};
 
 Template.OrdersOpen.rendered = function() {
 	var syncDropdown = function() {

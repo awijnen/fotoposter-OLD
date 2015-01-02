@@ -10,14 +10,14 @@ Template.OrdersConfigure.events({
 			quantity: templ.find('input[name=quantity]').value,
 			width: templ.find('input[name=width]').value,
 			length: templ.find('input[name=length]').value,
-			paper: templ.find('select[name=paper]').value,
-			finish: templ.find('select[name=finish]').value,
-			suspension: templ.find('select[name=suspension]').value,
+			paperId: templ.find('select[name=paper]').value,
+			finishId: templ.find('select[name=finish]').value,
+			suspensionId: templ.find('select[name=suspension]').value,
 			laminate: templ.find('input[name=laminate]').checked
 		};
 
 		var onLastOrderItemDone = function() {
-			var orderId = Session.get('currentOrderId');
+			var orderId = this._id;
 			var orderItem = OrderItems.findOne({configured: false, orderId: orderId});
 
 			if(orderItem) {
@@ -27,6 +27,13 @@ Template.OrdersConfigure.events({
 		};
 
 		App.updateOrderItems('orderItemsBeingConfigured', orderItemAttributes, onLastOrderItemDone);
+	},
+
+	'click .ordersconfigure-removeorder': function(e, templ) {
+		e.preventDefault();
+		Meteor.call('orderDelete', this._id);
+
+		Router.go('orders.upload');
 	}
 });
 
@@ -77,6 +84,22 @@ Template.OrdersConfigure.helpers({
 		}
 
 		return '';
+	},
+
+	isNonTiff: function() {
+		var firstOrderItemBeinfConfigured = Session.get('orderItemsBeingConfigured')[0];
+
+		if (firstOrderItemBeinfConfigured) {
+			var orderItem = OrderItems.findOne(firstOrderItemBeinfConfigured.orderItemId);
+
+			if (orderItem.file_type === 'image/tiff') {
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		return false;
 	}
 });
 
@@ -87,6 +110,7 @@ Template.OrdersConfigure.created = function() {
 	var orderId = Iron.controller().params._id;
 	Session.set('currentOrderId', orderId);
 	Session.setDefault('orderItemsBeingConfigured', []);
+	Session.set('currentAction', 'configure');
 
 	// On creation select the first order item belonging to the current order that hasn't been configured yet.
 	var firstOrderItem = OrderItems.findOne({configured: false, orderId: orderId});
@@ -110,9 +134,9 @@ Template.OrdersConfigure.rendered = function() {
 		if (firstOrderItemBeinfConfigured) {
 			var orderItem = OrderItems.findOne(firstOrderItemBeinfConfigured.orderItemId);
 
-			var paper_db = Papers.findOne(orderItem.paper);
-			var finish_db = Finishes.findOne(orderItem.finish);
-			var suspension_db = Suspensions.findOne(orderItem.suspension);
+			var paper_db = Papers.findOne(orderItem.paperId);
+			var finish_db = Finishes.findOne(orderItem.finishId);
+			var suspension_db = Suspensions.findOne(orderItem.suspensionId);
 
 			if (paper_db) {
 				paper.val(paper_db._id);

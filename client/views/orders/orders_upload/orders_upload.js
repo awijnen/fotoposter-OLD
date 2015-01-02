@@ -38,7 +38,19 @@ Template.OrdersUpload.events({
                 this.context.cloudStorageUrl = cloudStorageUrl;
                 this.context.sessionArrayKey = sessionArrayKey;
 
-                App.getDimensions(this.context);
+                if (this.context.file.type !== 'image/tiff') {
+                    App.getDimensions(this.context);
+                } else {
+                    var pushObject = {};
+                    pushObject.url = this.context.cloudStorageUrl;
+                    pushObject.fileType = this.context.file.type;
+
+                    console.log('Pushing "' + JSON.stringify(pushObject) + '" in Session variable ' + this.context.sessionArrayKey + '...');
+                    App.sessionArrayPushObject(this.context.sessionArrayKey, pushObject);
+
+                    // Upload next file
+                    App.uploadFileArray(this.context.fileArray, this.context.onUploadDone, this.context.onLastUploadDone);
+                }
             }
         };
 
@@ -89,6 +101,7 @@ Template.OrdersUpload.helpers({
 /* Upload: Lifecycle Hooks */
 /*****************************************************************************/
 Template.OrdersUpload.created = function() {
+    Session.set('currentAction', 'upload');
     Session.set('currentOrderId');
     Session.set('imageUrlArray', []);
     Session.set('uploading', false);

@@ -1,0 +1,42 @@
+<template name="OrdersConfirm">
+	<h1>Mijn Bestelling</h1>
+	<ul class="ordersconfirm">
+		<li class="ordersconfirm-order">
+			<div>
+				<ul>
+					<li>Order ID: {{_id}}</li>
+					<li>User ID: {{userId}}</li>
+					<li>Opmerking: {{remark}}</li>
+					<li>Prijs: €{{price}}</li>
+					<li>Status: {{status}}</li>
+					<li>Verzonden op: {{submitted}}</li>
+				</ul>
+
+
+				<div class="ordersconfirm-orderitems">
+					{{#each orderItems}}
+						<ul class="ordersconfirm-orderitem">
+							<li>OrderItem ID: {{_id}}</li>
+							<li>Order ID: {{orderId}}</li>
+							<li>Bestand: {{image}}</li>
+							<li>Remark: {{remark}}</li>
+							<li>Aantal: {{quantity}}</li>
+							<li>Breedte: {{width}}</li>
+							<li>Lengte: {{length}}</li>
+							<li>Papier: {{getPaperName paperId}}</li>
+							<li>Afwerking: {{getFinishName finishId}}</li>
+							<li>Ophanging: {{getSuspensionName suspensionId}}</li>
+							<li>User ID: {{userId}}</li>
+						</ul>
+					{{/each}}
+				</div>
+
+			</div>
+		</li>
+		<br>
+	</ul>
+
+	<a href="{{pathFor 'orders.complete'}}">
+		<button class="btn btn-primary ordersconfigure-confirmbutton">Bevestig</button>
+	</a>
+</template>

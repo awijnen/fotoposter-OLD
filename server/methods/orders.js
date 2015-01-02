@@ -21,6 +21,24 @@ Meteor.methods({
         });
 
         return Orders.insert(order);
+    },
+
+    orderDelete: function(id) {
+        OrderItems.remove({orderId: id}, function(err, res) {
+            if (err) {
+                throw new Error(err);
+            } else {
+                console.log(res);
+            }
+        });
+
+        Orders.remove(id, function(err, res) {
+            if (err) {
+                throw new Error(err);
+            } else {
+                console.log(res);
+            }
+        });
     }
 
 });

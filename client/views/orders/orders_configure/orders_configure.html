@@ -25,12 +25,14 @@
                                 <input class="form-control" type="number" name="quantity" value="{{currentOrderItem 'quantity'}}"/>
                             </label>
 
-                            <label>
-                                Ratio:
-                                <div class="ordersconfigure-ratio">
-                                    1.5 / 1
-                                </div>
-                            </label>
+                            {{#if isNonTiff}}
+                                <label>
+                                    Ratio:
+                                    <div class="ordersconfigure-ratio">
+                                        1.5 / 1
+                                    </div>
+                                </label>
+                            {{/if}}
 
                             <label>
                                 Breedte (cm):
@@ -120,7 +122,18 @@
 
         <div class="row">
              <p>Order: <span>{{getOrderId}}</span></p>
-             <button type="submit" class="btn btn-primary ordersconfigure-delete">Verwijder Order Item</button>
+
+            <a href="{{pathFor 'orders.upload' hash=_id}}">
+                <button class="btn btn-primary ordersconfigure-confirmbutton">Ga terug</button>
+            </a>
+
+            <a href="{{pathFor 'orders.confirm'}}">
+                <button class="btn btn-primary ordersconfigure-confirmbutton">Ga verder</button>
+            </a>
+
+            <a href="{{pathFor 'orders.cancel'}}">
+                <button class="btn btn-warning ordersconfigure-removeorder">Verwijder Order</button>
+            </a>
         </div>
     </div>
 

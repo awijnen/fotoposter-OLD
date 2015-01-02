@@ -1,7 +1,7 @@
 Slingshot.createDirective("myFileUploads", Slingshot.S3Storage, {
 	bucket: "fotoposterireland",
 	domain: "fotoposterireland.s3-eu-west-1.amazonaws.com",
-	allowedFileTypes: ["image/png", "image/jpeg", "image/gif"],
+	allowedFileTypes: ["image/tiff", "image/png", "image/jpeg"],
 	maxSize: 0,
 	acl: "public-read",
 

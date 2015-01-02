@@ -58,17 +58,16 @@ _.extend(App, {
 				onLastUploadDone: onLastUploadDone
 			};
 
-			var uploader = new Slingshot.Upload("myFileUploads");
-			window.fotoposter.file_being_handled = file;
 			var uploadDone = function(err, cloudStorageUrl) {
 				onUploadDone.callback(err, cloudStorageUrl);
 			};
+
+			var uploader = new Slingshot.Upload("myFileUploads");
 			uploader.send(file, uploadDone);
 		}
 	},
 
 	getDimensions: function(context) {
-
 		var _URL = window.URL || window.webkitURL;
 		var pushObject = {};
 	    var image = new Image();
@@ -78,6 +77,7 @@ _.extend(App, {
             pushObject.width = this.width;
             pushObject.height = this.height;
             pushObject.url = this.context.cloudStorageUrl;
+            pushObject.fileType = this.context.file.type;
 
             console.log('Pushing "' + JSON.stringify(pushObject) + '" in Session variable ' + this.context.sessionArrayKey + '...');
             App.sessionArrayPushObject(this.context.sessionArrayKey, pushObject);
@@ -125,6 +125,7 @@ _.extend(App, {
 				image: pushObject.url,
 				image_width: pushObject.width,
 				image_height: pushObject.height,
+				file_type: pushObject.fileType,
 				configured: false
 			};
 
@@ -222,6 +223,18 @@ App.helpers = {
 	thumbnailsCount: function(route) {
 		var orderItems = App.helpers.thumbnails(route);
 		return orderItems.count();
+	},
+
+	getPaperName:function(paperId) {
+		return Papers.findOne(paperId).name;
+	},
+
+	getFinishName:function(finishId) {
+		return Finishes.findOne(finishId).name;
+	},
+
+	getSuspensionName:function(suspensionId) {
+		return Suspensions.findOne(suspensionId).name;
 	}
 };
 
