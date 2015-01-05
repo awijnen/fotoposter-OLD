@@ -4,6 +4,7 @@
 Template.OrdersConfigure.events({
 	'submit form.ordersconfigure-form': function(e, templ) {
 		e.preventDefault();
+		var orderId = this._id;
 
 		var orderItemAttributes = {
 			configured: true,
@@ -16,24 +17,22 @@ Template.OrdersConfigure.events({
 			laminate: templ.find('input[name=laminate]').checked
 		};
 
-		var onLastOrderItemDone = function() {
-			var orderId = this._id;
+		var onLastOrderItemDone = function(orderId) {
 			var orderItem = OrderItems.findOne({configured: false, orderId: orderId});
-
 			if(orderItem) {
 				var orderItemId = orderItem._id;
 				Session.set('orderItemsBeingConfigured', [{orderItemId: orderItemId}]);
 			}
 		};
 
-		App.updateOrderItems('orderItemsBeingConfigured', orderItemAttributes, onLastOrderItemDone);
+		// Pass the orderId so it can be used in 'onLastOrderItemDone' to automatically refill the 'orderItemsBeingConfigured' array
+		App.updateOrderItems('orderItemsBeingConfigured', orderItemAttributes, onLastOrderItemDone, orderId);
 	},
 
-	'click .ordersconfigure-removeorder': function(e, templ) {
-		e.preventDefault();
-		Meteor.call('orderDelete', this._id);
-
-		Router.go('orders.upload');
+	'click .ordersconfigure-removeorder': function() {
+		var orderId = this._id;
+		App.removeOrderAndOrderItems(orderId);
+		Router.go('orders.cancel', {_id: orderId});
 	}
 });
 
@@ -59,11 +58,10 @@ Template.OrdersConfigure.helpers({
 			return obj.orderItemId;
 		});
 
+		// only take the order items that are either configured or NOT configured, and filter out (NOT in) those that are currently being configured.
 		var orderItems = OrderItems.find({
 			configured: isConfigured,
-			_id: {
-				$nin: orderItemsBeingConfigured
-			}
+			_id: {$nin: orderItemsBeingConfigured}
 		});
 
 		var result = {

@@ -2,21 +2,16 @@
 /* OrdersCancel: Event Handlers and Helpersss .js*/
 /*****************************************************************************/
 Template.OrdersCancel.events({
-  /*
-   * Example:
-   *  'click .selector': function (e, tmpl) {
-   *
-   *  }
-   */
+	/*
+	 * Example:
+	 *  'click .selector': function (e, tmpl) {
+	 *
+	 *  }
+	 */
 });
 
 Template.OrdersCancel.helpers({
-  /*
-   * Example:
-   *  items: function () {
-   *    return Items.find();
-   *  }
-   */
+
 });
 
 /*****************************************************************************/

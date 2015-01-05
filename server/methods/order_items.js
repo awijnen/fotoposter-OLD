@@ -26,5 +26,15 @@ Meteor.methods({
             {_id: id},
             {$set: orderItemAttributes}
         );
+    },
+
+    orderItemDelete: function(id) {
+        OrderItems.remove(id, function(err, res){
+            if (err) {
+                throw new Error(err);
+            } else {
+                console.log(res);
+            }
+        });
     }
 });

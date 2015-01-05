@@ -2,31 +2,25 @@
 /* OrdersTest: Event Handlers and Helpersss .js*/
 /*****************************************************************************/
 Template.OrdersTest.events({
-  /*
-   * Example:
-   *  'click .selector': function (e, tmpl) {
-   *
-   *  }
-   */
+	"click button.upload": function() {
+		var files = $("input.file_bag")[0].files;
+		S3.upload(files, "/subfolder", function(e, r) {
+				console.log(r);
+		});
+	}
 });
 
 Template.OrdersTest.helpers({
-  /*
-   * Example:
-   *  items: function () {
-   *    return Items.find();
-   *  }
-   */
+	"files": function() {
+		return S3.collection.find();
+	}
 });
 
 /*****************************************************************************/
 /* OrdersTest: Lifecycle Hooks */
 /*****************************************************************************/
-Template.OrdersTest.created = function () {
-};
+Template.OrdersTest.created = function() {};
 
-Template.OrdersTest.rendered = function () {
-};
+Template.OrdersTest.rendered = function() {};
 
-Template.OrdersTest.destroyed = function () {
-};
+Template.OrdersTest.destroyed = function() {};

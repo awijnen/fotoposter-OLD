@@ -1,3 +1,10 @@
 <template name="OrdersTest">
-	Yo
+
+	<input type="file" class="file_bag" multiple>
+	<button class="upload">Upload</button>
+
+	{{#each files}}
+		<p>{{percent_uploaded}}</p>
+	{{/each}}
+
 </template>

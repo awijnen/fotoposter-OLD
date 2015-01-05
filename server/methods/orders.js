@@ -24,14 +24,6 @@ Meteor.methods({
     },
 
     orderDelete: function(id) {
-        OrderItems.remove({orderId: id}, function(err, res) {
-            if (err) {
-                throw new Error(err);
-            } else {
-                console.log(res);
-            }
-        });
-
         Orders.remove(id, function(err, res) {
             if (err) {
                 throw new Error(err);

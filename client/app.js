@@ -142,13 +142,13 @@ _.extend(App, {
 		}
 	},
 
-	updateOrderItems: function(sessionArrayKey, orderItemAttributes, onLastOrderItemDone) {
+	updateOrderItems: function(sessionArrayKey, orderItemAttributes, onLastOrderItemDone, orderId) {
 		var sessionArray = Session.get(sessionArrayKey);
 
 		if (_.isEmpty(sessionArray)) {
 			console.log('Done updating order items. SessionArray is now empty.\n');
 			Session.set('updating', false);
-			onLastOrderItemDone();
+			onLastOrderItemDone(orderId);
 		} else {
 			var orderItem = sessionArray.shift();
 			var orderItemId = orderItem.orderItemId;
@@ -161,10 +161,23 @@ _.extend(App, {
 					App.sessionArrayPopWithKeyValue('orderItemsBeingConfigured', 'orderItemId', orderItemId);
 
 					// insert next OrderItem
-					App.updateOrderItems(sessionArrayKey, orderItemAttributes, onLastOrderItemDone);
+					App.updateOrderItems(sessionArrayKey, orderItemAttributes, onLastOrderItemDone, orderId);
 				}
 			});
 		}
+	},
+
+	removeOrderAndOrderItems: function(orderId) {
+		var orderItems = OrderItems.find({orderId: orderId});
+		var orderItemIds = orderItems.map(function(orderItem) {
+			return orderItem._id;
+		});
+
+		orderItemIds.forEach(function(orderItemId) {
+			Meteor.call('orderItemDelete', orderItemId);
+		});
+
+		Meteor.call('orderDelete', orderId);
 	}
 });
 

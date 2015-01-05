@@ -37,7 +37,7 @@ Router.route('/orders/confirm/:_id', {name: 'orders.confirm'});
 Router.route('/orders/complete/:_id', {name: 'orders.complete'});
 Router.route('/orders/cancel/:_id', {name: 'orders.cancel'});
 
-Router.route('/orders/test', {name: 'orders.test'})
+Router.route('/orders/test', {name: 'orders.test'});
 
 Router.route('/papers', {name: 'papers.index'});
 Router.route('/prices', {name: 'prices.index'});
